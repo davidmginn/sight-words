@@ -1,6 +1,56 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
-import { ListGroup, ListGroupItem, Button, ButtonGroup } from "react-bootstrap";
+import { Button, ButtonGroup, PageHeader } from "react-bootstrap";
+
+const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
+  if (selectedWordCollection === "") return null;
+
+  return (
+    <Fragment>
+      <PageHeader>{word}</PageHeader>
+      <ButtonGroup bsSize="large">
+        <Button bsStyle="success" onClick={correct}>
+          YES
+        </Button>
+        <Button bsStyle="danger" onClick={incorrect}>
+          NO
+        </Button>
+      </ButtonGroup>
+    </Fragment>
+  );
+};
+
+const Complete = ({ reset, selectedWordCollection }) => {
+  if (selectedWordCollection === "") return null;
+
+  return (
+    <Fragment>
+      <PageHeader>Complete!</PageHeader>
+      <ButtonGroup bsSize="large">
+        <Button onClick={reset}>Start Over?</Button>
+      </ButtonGroup>
+    </Fragment>
+  );
+};
+
+const WordSelection = ({ words, onClick, selectedWordCollection }) => {
+  if (selectedWordCollection !== "") return null;
+
+  return (
+    <Fragment>
+      <PageHeader>Select sight word library</PageHeader>
+      <ButtonGroup bsSize="large">
+        {_.map(words, (word, index) => {
+          return (
+            <Button key={index} onClick={() => onClick(word)}>
+              {word}
+            </Button>
+          );
+        })}
+      </ButtonGroup>
+    </Fragment>
+  );
+};
 
 const numbers = [
   "one",
@@ -33,15 +83,47 @@ class SightWords extends Component {
     super(props);
     this.state = {
       colors: colors,
-      numbers: numbers
+      numbers: numbers,
+      words: [],
+      incorrect: [],
+      wordCollections: ["colors", "numbers", "all"],
+      selectedWordCollection: ""
     };
   }
 
   componentDidMount = () => {
-    let words = _.flatten([this.state.colors, this.state.numbers]);
+    const words = _.flatten([this.state.colors, this.state.numbers]);
+    this.shuffleWords(words);
+  };
+
+  setWordCollection = name => {
+    if (name === "all") {
+      const words = _.flatten([this.state.colors, this.state.numbers]);
+      this.shuffleWords(words);
+    } else {
+      const words = _.get(this.state, name);
+      this.shuffleWords(words);
+    }
+
     this.setState({
-      words: _.shuffle(words),
-      incorrect: []
+      selectedWordCollection: name
+    });
+  };
+
+  shuffleWords = words => {
+    const shuffledWords = _.shuffle(words);
+    this.setState({
+      words: shuffledWords,
+      incorrect: [],
+      selectedWord: shuffledWords[0]
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      words: [],
+      incorrect: [],
+      selectedWordCollection: ""
     });
   };
 
@@ -50,9 +132,16 @@ class SightWords extends Component {
       return w !== word;
     });
 
+    let incorrect = _.remove(this.state.incorrect, w => {
+      return w !== word;
+    });
+
+    let nextWords = words.length > 0 ? words : incorrect;
+
     this.setState({
-      words: words.length > 0 ? words : this.state.incorrect,
-      incorrect: words.length > 0 ? this.state.incorrect : []
+      words: nextWords,
+      incorrect: incorrect,
+      selectedWord: nextWords.length > 0 ? nextWords[0] : ""
     });
   };
 
@@ -64,36 +153,37 @@ class SightWords extends Component {
     let incorrect = this.state.incorrect;
     incorrect.push(word);
 
+    let nextWords = words.length > 0 ? words : incorrect;
     this.setState({
-      words: words.length > 0 ? words : incorrect,
-      incorrect: words.length > 0 ? incorrect : []
+      words: nextWords,
+      incorrect: words.length > 0 ? incorrect : [],
+      selectedWord: nextWords.length > 0 ? nextWords[0] : ""
     });
   };
 
   render() {
-    console.log(this.state.words ? this.state.words.length : "");
     return (
       <Fragment>
-        <ListGroup>
-          {_.map(this.state.words, (word, index) => (
-            <ListGroupItem
-              style={{
-                fontSize: "1.75em"
-              }}
-              key={index}
-            >
-              {word}
-              <ButtonGroup className="pull-right">
-                <Button bsStyle="success" onClick={() => this.correct(word)}>
-                  Correct
-                </Button>
-                <Button bsStyle="danger" onClick={() => this.incorrect(word)}>
-                  Incorrect
-                </Button>
-              </ButtonGroup>
-            </ListGroupItem>
-          ))}
-        </ListGroup>
+        <WordSelection
+          words={this.state.wordCollections}
+          onClick={this.setWordCollection}
+          selectedWordCollection={this.state.selectedWordCollection}
+        />
+        {this.state.selectedWordCollection !== "" ? null : null}
+
+        {this.state.words.length > 0 ? (
+          <WordCard
+            word={this.state.selectedWord}
+            correct={() => this.correct(this.state.selectedWord)}
+            incorrect={() => this.incorrect(this.state.selectedWord)}
+            selectedWordCollection={this.state.selectedWordCollection}
+          />
+        ) : (
+          <Complete
+            reset={this.reset}
+            selectedWordCollection={this.state.selectedWordCollection}
+          />
+        )}
       </Fragment>
     );
   }

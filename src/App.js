@@ -13,9 +13,9 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to Ethan's Sight Words!</h1>
           </header>
-        </div>
-        <div>
-          <SightWords />
+          <div>
+            <SightWords />
+          </div>
         </div>
       </Fragment>
     );
