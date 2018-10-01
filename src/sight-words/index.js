@@ -106,13 +106,13 @@ class SightWords extends Component {
   }
 
   componentDidMount = () => {
-    const words = _.flatten([this.state.colors, this.state.numbers]);
-    this.shuffleWords(words);
+    //const words = _.flatten([this.state.colors, this.state.numbers]);
+    //this.shuffleWords(words);
   };
 
   setWordCollection = name => {
     if (name === "all") {
-      const words = _.flatten([this.state.colors, this.state.numbers]);
+      const words = _.flatten([this.state.colors, this.state.numbers, this.state.common]);
       this.shuffleWords(words);
     } else {
       const words = _.get(this.state, name);
