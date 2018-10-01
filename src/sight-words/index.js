@@ -52,6 +52,19 @@ const WordSelection = ({ words, onClick, selectedWordCollection }) => {
   );
 };
 
+const common = [
+  "in",
+  "and",
+  "that",
+  "the",
+  "it",
+  "of",
+  "to",
+  "you",
+  "is",
+  "a"
+];
+
 const numbers = [
   "one",
   "two",
@@ -84,9 +97,10 @@ class SightWords extends Component {
     this.state = {
       colors: colors,
       numbers: numbers,
+      common: common,
       words: [],
       incorrect: [],
-      wordCollections: ["colors", "numbers", "all"],
+      wordCollections: ["colors", "numbers", "common", "all"],
       selectedWordCollection: ""
     };
   }
