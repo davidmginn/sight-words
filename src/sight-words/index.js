@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
-import { Button, ButtonGroup, PageHeader, Jumbotron } from "react-bootstrap";
+import { Button, ButtonGroup, PageHeader } from "react-bootstrap";
 
 const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
   if (selectedWordCollection === "") return null;
 
   return (
     <Fragment>
-      <Jumbotron>
-      <h1>{word}</h1>
+      <PageHeader className="active-word">{word}</PageHeader>
       <ButtonGroup bsSize="large">
         <Button bsStyle="success" onClick={correct}>
           YES
@@ -17,7 +16,6 @@ const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
           NO
         </Button>
       </ButtonGroup>
-      </Jumbotron>
     </Fragment>
   );
 };
