@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
-import { Button, ButtonGroup, PageHeader } from "react-bootstrap";
+import { Button, ButtonGroup, PageHeader, Jumbotron } from "react-bootstrap";
 
 const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
   if (selectedWordCollection === "") return null;
 
   return (
     <Fragment>
-      <PageHeader>{word}</PageHeader>
+      <Jumbotron>
+      <h1>{word}</h1>
       <ButtonGroup bsSize="large">
         <Button bsStyle="success" onClick={correct}>
           YES
@@ -16,6 +17,7 @@ const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
           NO
         </Button>
       </ButtonGroup>
+      </Jumbotron>
     </Fragment>
   );
 };
@@ -104,11 +106,6 @@ class SightWords extends Component {
       selectedWordCollection: ""
     };
   }
-
-  componentDidMount = () => {
-    //const words = _.flatten([this.state.colors, this.state.numbers]);
-    //this.shuffleWords(words);
-  };
 
   setWordCollection = name => {
     if (name === "all") {
