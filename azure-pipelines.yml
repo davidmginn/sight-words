@@ -23,3 +23,12 @@ jobs:
       includeRootFolder: false
   - task: PublishBuildArtifacts@1
     displayName: 'Publish artifacts: drop'
+    steps:
+  - task: AzureRmWebAppDeployment@3
+    displayName: 'Azure App Service Deploy: villa-sight-words'
+    inputs:
+      azureSubscription: 'Dave MSDN'
+      appType: applinux
+      WebAppName: 'vma-sight-words'
+      ImageSource: Builtin
+      RuntimeStack: 'NODE|8.11'
