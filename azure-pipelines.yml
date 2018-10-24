@@ -11,8 +11,8 @@ jobs:
     name: 'Hosted Ubuntu 1604'
     demands: npm
   variables:
-    PublishPath: '$(Build.StagingDirectory)/$(ArtifactName)'
-    DeployPackage: '$(Build.StagingDirectory)/$(ZipName)'
+    PublishPath: '$(Build.ArtifactStagingDirectory)/$(ArtifactName)'
+    DeployPackage: '$(Build.ArtifactStagingDirectory)/$(ZipName)'
   steps:
   - task: NodeTool@0
     inputs:
