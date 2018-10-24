@@ -2,7 +2,7 @@ name: 'Sight Words Pipeline'
 resources:
 - repo: self
 variables:
-  ArtifactName: 'wwwroot'
+  ArtifactName: 'build'
   ZipName: 'sight-words.zip'
 jobs:
 - job: Build
