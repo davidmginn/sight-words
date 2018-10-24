@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import logo from "./logo.svg";
+import vmaLogo from './images/VillaMadonnaAcademy.jpg';
 import "./App.css";
 import "./sight-words";
 import SightWords from "./sight-words";
@@ -10,8 +10,8 @@ class App extends Component {
       <Fragment>
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to Ethan's Sight Words!</h1>
+            <img src={vmaLogo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Kindergarten Sight Words</h1>
           </header>
           <div>
             <SightWords />

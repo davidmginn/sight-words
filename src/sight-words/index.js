@@ -42,77 +42,87 @@ const WordSelection = ({ words, onClick, selectedWordCollection }) => {
       <ButtonGroup bsSize="large">
         {_.map(words, (word, index) => {
           return (
-            <Button key={index} onClick={() => onClick(word)}>
-              {word}
+            <Button key={index} onClick={() => onClick(word.displayName)}>
+              {word.displayName}
             </Button>
           );
         })}
+        <Button onClick={() => onClick("All")}>All</Button>
       </ButtonGroup>
     </Fragment>
   );
 };
 
-const common = [
-  "in",
-  "and",
-  "that",
-  "the",
-  "it",
-  "of",
-  "to",
-  "you",
-  "is",
-  "a"
-];
+const setOne = {
+  displayName: "Set #1",
+  words: ["in", "and", "that", "the", "it", "of", "to", "you", "is", "a"]
+};
 
-const numbers = [
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-  "ten"
-];
+const setTwo = {
+  displayName: "Set #2",
+  words: ["he", "was", "are", "with", "they", "for", "on", "as", "his", "at"]
+};
 
-const colors = [
-  "red",
-  "pink",
-  "purple",
-  "blue",
-  "brown",
-  "black",
-  "orange",
-  "green",
-  "white",
-  "yellow"
-];
+const numbers = {
+  displayName: "Numbers",
+  words: [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten"
+  ]
+};
+
+const colors = {
+  displayName: "Colors",
+  words: [
+    "red",
+    "pink",
+    "purple",
+    "blue",
+    "brown",
+    "black",
+    "orange",
+    "green",
+    "white",
+    "yellow"
+  ]
+};
 
 class SightWords extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colors: colors,
-      numbers: numbers,
-      common: common,
+      wordSets: [colors, numbers, setOne, setTwo],
       words: [],
       incorrect: [],
-      wordCollections: ["colors", "numbers", "common", "all"],
       selectedWordCollection: ""
     };
   }
 
   setWordCollection = name => {
-    if (name === "all") {
-      const words = _.flatten([this.state.colors, this.state.numbers, this.state.common]);
-      this.shuffleWords(words);
-    } else {
-      const words = _.get(this.state, name);
-      this.shuffleWords(words);
-    }
+    var sets = _.reduce(
+      this.state.wordSets,
+      (result, value) => {
+        if (name === "All") {
+          result.push(value.words);
+          return result;
+        }
+        value.displayName === name && result.push(value.words);
+        return result;
+      },
+      []
+    );
+
+    var words = _.flatten(sets);
+
+    this.shuffleWords(words);
 
     this.setState({
       selectedWordCollection: name
@@ -174,7 +184,7 @@ class SightWords extends Component {
     return (
       <Fragment>
         <WordSelection
-          words={this.state.wordCollections}
+          words={this.state.wordSets}
           onClick={this.setWordCollection}
           selectedWordCollection={this.state.selectedWordCollection}
         />
