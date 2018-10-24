@@ -1,18 +1,12 @@
 name: 'Sight Words Pipeline'
 resources:
 - repo: self
-variables:
-  ArtifactName: 'wwwroot'
-  ZipName: 'sight-words.zip'
 jobs:
 - job: Build
   displayName: 'Build'
   pool:
     name: 'Hosted Ubuntu 1604'
     demands: npm
-  variables:
-    PublishPath: '$(Build.ArtifactStagingDirectory)/$(ArtifactName)'
-    DeployPackage: '$(Build.ArtifactStagingDirectory)/$(ZipName)'
   steps:
   - task: NodeTool@0
     inputs:
@@ -25,11 +19,7 @@ jobs:
   - task: ArchiveFiles@2
     displayName: 'Archive files'
     inputs:
-      rootFolderOrFile: '$(PublishPath)'
-      includeRootFolder: true
-      archiveFile: '$(DeployPackage)'
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifacts: $(ArtifactName)'
-    inputs:
-      PathtoPublish: '$(DeployPackage)'
-      ArtifactName: $(ArtifactName)
+    displayName: 'Publish artifacts: drop'
