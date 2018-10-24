@@ -1,18 +1,35 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
-pool:
-  vmImage: 'Ubuntu 16.04'
-
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    yarn install
-    yarn build
-  displayName: 'yarn install and build'
+name: 'Sight Words Pipeline'
+resources:
+- repo: self
+variables:
+  ArtifactName: 'wwwroot'
+  ZipName: 'sight-words.zip'
+jobs:
+- job: Build
+  displayName: 'Build'
+  pool:
+    name: 'Hosted Linux Preview'
+    demands: npm
+  variables:
+    PublishPath: '$(Build.StagingDirectory)/$(ArtifactName)'
+    DeployPackage: '$(Build.StagingDirectory)/$(ZipName)'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '8.x'
+    displayName: 'Install Node.js'
+  - script: |
+      yarn install
+      yarn build
+    displayName: 'yarn install and build'
+  - task: ArchiveFiles@2
+    displayName: 'Archive files'
+    inputs:
+      rootFolderOrFile: '$(PublishPath)'
+      includeRootFolder: false
+      archiveFile: '$(DeployPackage)'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts: $(ArtifactName)'
+    inputs:
+      PathtoPublish: '$(DeployPackage)'
+      ArtifactName: $(ArtifactName)
