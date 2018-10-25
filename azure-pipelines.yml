@@ -15,3 +15,5 @@ steps:
   displayName: 'docker build'
 - script: docker push $(dockerId).azurecr.io/$(imageName)
   displayName: 'docker push'
+  inputs:
+    azureSubscription: 'Dave MSDN'
