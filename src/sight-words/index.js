@@ -38,7 +38,7 @@ const WordSelection = ({ words, onClick, selectedWordCollection }) => {
 
   return (
     <Fragment>
-      <PageHeader>Select sight word library</PageHeader>
+      <PageHeader>Select Sight Word Library</PageHeader>
       <ButtonGroup bsSize="large">
         {_.map(words, (word, index) => {
           return (
