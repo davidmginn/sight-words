@@ -11,7 +11,7 @@ variables:
   imageName: 'sight-words'
 
 steps:
-- script: docker build -t $(dockerId)/$(imageName) .
+- script: docker build -t $(dockerId).azurecr.io/$(imageName) .
   displayName: 'docker build'
 - script: docker push $(dockerId).azurecr.io/$(imageName)
   displayName: 'docker push'
