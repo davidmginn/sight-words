@@ -8,10 +8,10 @@ pool:
 
 variables:
   dockerId: 'davidmginn'
-  imageName: 'davidmginn/sightwords:latest'
+  imageName: 'sight-words'
 
 steps:
-- script: docker build -f Dockerfile -t $(imageName) .
+- script: docker build -t $(dockerId)/$(imageName) .
   displayName: 'docker build'
 - script: docker push $(dockerId).azurecr.io/$(imageName)
   displayName: 'docker push'
