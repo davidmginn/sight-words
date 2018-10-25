@@ -13,7 +13,7 @@ variables:
 steps:
 - script: docker build -t $(dockerId).azurecr.io/$(imageName) .
   displayName: 'docker build'
-- script: docker push $(dockerId).azurecr.io/$(imageName)
+- script: | 
+    docker login -u $(dockerId).azurecr.io -p $(pswd) $(dockerid).azurecr.io
+    docker push $(dockerId).azurecr.io/$(imageName)
   displayName: 'docker push'
-  inputs:
-    azureSubscription: 'Dave MSDN'
