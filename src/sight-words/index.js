@@ -68,6 +68,11 @@ const setThree = {
   words: ["I", "be", "this", "not", "by", "have", "had", "or", "from"]
 }
 
+const setFour = {
+  displayName: "Set #4",
+  words: ["but", "all", "when", "there", "an", "what", "were", "we", "can", "your"]
+}
+
 const numbers = {
   displayName: "Numbers",
   words: [
@@ -104,7 +109,7 @@ class SightWords extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wordSets: [colors, numbers, setOne, setTwo, setThree],
+      wordSets: [colors, numbers, setOne, setTwo, setThree, setFour],
       words: [],
       incorrect: [],
       selectedWordCollection: ""
