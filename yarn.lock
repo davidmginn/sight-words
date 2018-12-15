@@ -4748,6 +4748,10 @@ once@^1.3.0, once@^1.4.0:
   dependencies:
     wrappy "1"
 
+one-time@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/one-time/-/one-time-0.0.4.tgz#f8cdf77884826fe4dff93e3a9cc37b1e4480742e"
+
 onetime@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
@@ -5995,6 +5999,12 @@ sax@^1.2.1, sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
+say@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/say/-/say-0.15.0.tgz#ca0d7b88a06cfc485aaa82287b263c31a0d33e75"
+  dependencies:
+    one-time "0.0.4"
+
 schedule@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.5.0.tgz#c128fffa0b402488b08b55ae74bb9df55cc29cc8"
@@ -6275,6 +6285,10 @@ spdy@^3.4.1:
     safe-buffer "^5.0.1"
     select-hose "^2.0.0"
     spdy-transport "^2.0.18"
+
+speech-synthesis@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/speech-synthesis/-/speech-synthesis-0.3.2.tgz#7c05839e89a99ac9d51a29a76355e9f8700ed02d"
 
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
