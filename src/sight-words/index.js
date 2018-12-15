@@ -1,21 +1,38 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
-import { Button, ButtonGroup, PageHeader } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  PageHeader,
+  ButtonToolbar
+} from "react-bootstrap";
+import speechSynthesis from "speech-synthesis";
 
-const WordCard = ({ word, correct, incorrect, selectedWordCollection }) => {
+const WordCard = ({
+  word,
+  correct,
+  incorrect,
+  sayWord,
+  selectedWordCollection
+}) => {
   if (selectedWordCollection === "") return null;
 
   return (
     <Fragment>
       <PageHeader className="active-word">{word}</PageHeader>
-      <ButtonGroup bsSize="large">
-        <Button bsStyle="success" onClick={correct}>
-          YES
-        </Button>
-        <Button bsStyle="danger" onClick={incorrect}>
-          NO
-        </Button>
-      </ButtonGroup>
+      <ButtonToolbar className="word-actions">
+        <ButtonGroup bsSize="large">
+          <Button bsStyle="success" onClick={correct}>
+            YES
+          </Button>
+          <Button bsStyle="danger" onClick={incorrect}>
+            NO
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup bsSize="large">
+          <Button onClick={sayWord}>Say It!</Button>
+        </ButtonGroup>
+      </ButtonToolbar>
     </Fragment>
   );
 };
@@ -66,12 +83,23 @@ const setTwo = {
 const setThree = {
   displayName: "Set #3",
   words: ["I", "be", "this", "not", "by", "have", "had", "or", "from"]
-}
+};
 
 const setFour = {
   displayName: "Set #4",
-  words: ["but", "all", "when", "there", "an", "what", "were", "we", "can", "your"]
-}
+  words: [
+    "but",
+    "all",
+    "when",
+    "there",
+    "an",
+    "what",
+    "were",
+    "we",
+    "can",
+    "your"
+  ]
+};
 
 const numbers = {
   displayName: "Numbers",
@@ -190,6 +218,10 @@ class SightWords extends Component {
     });
   };
 
+  sayWord = word => {
+    speechSynthesis(word, "en-US");
+  };
+
   render() {
     return (
       <Fragment>
@@ -205,6 +237,7 @@ class SightWords extends Component {
             word={this.state.selectedWord}
             correct={() => this.correct(this.state.selectedWord)}
             incorrect={() => this.incorrect(this.state.selectedWord)}
+            sayWord={() => this.sayWord(this.state.selectedWord)}
             selectedWordCollection={this.state.selectedWordCollection}
           />
         ) : (
