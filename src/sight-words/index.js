@@ -101,6 +101,22 @@ const setFour = {
   ]
 };
 
+const setFive = {
+  displayName: "Set #5",
+  words: [
+      "which",
+      "said",
+      "do",
+      "each",
+      "how",
+      "their",
+      "if",
+      "will",
+      "about",
+      "up"
+  ]
+}
+
 const numbers = {
   displayName: "Numbers",
   words: [
@@ -137,7 +153,7 @@ class SightWords extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wordSets: [colors, numbers, setOne, setTwo, setThree, setFour],
+      wordSets: [colors, numbers, setOne, setTwo, setThree, setFour, setFive],
       words: [],
       incorrect: [],
       selectedWordCollection: ""
