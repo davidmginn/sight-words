@@ -4,9 +4,20 @@ import {
   Button,
   ButtonGroup,
   PageHeader,
-  ButtonToolbar
+  ButtonToolbar,
+  ProgressBar
 } from "react-bootstrap";
 import speechSynthesis from "speech-synthesis";
+
+const WordProgress = ({ totalWordCount, remainingWordCount }) => {
+  var percent = 100 - ((remainingWordCount / totalWordCount) * 100);
+
+  return (
+    <div className="progress-container">
+      <ProgressBar animated="true" active now={percent} />
+    </div>
+  );
+};
 
 const WordCard = ({
   word,
@@ -104,34 +115,50 @@ const setFour = {
 const setFive = {
   displayName: "Set #5",
   words: [
-      "which",
-      "said",
-      "do",
-      "each",
-      "how",
-      "their",
-      "if",
-      "will",
-      "about",
-      "up"
+    "which",
+    "said",
+    "do",
+    "each",
+    "how",
+    "their",
+    "if",
+    "will",
+    "about",
+    "up"
   ]
-}
+};
 
 const setSix = {
   displayName: "Set #6",
   words: [
-      "out",
-      "then",
-      "many",
-      "so",
-      "would",
-      "them",
-      "she",
-      "some",
-      "these",
-      "other"
+    "out",
+    "then",
+    "many",
+    "so",
+    "would",
+    "them",
+    "she",
+    "some",
+    "these",
+    "other"
   ]
-}
+};
+
+const setSeven = {
+  displayName: "Set #7",
+  words: [
+    "into",
+    "more",
+    "two",
+    "him",
+    "time",
+    "has",
+    "her",
+    "like",
+    "see",
+    "could"
+  ]
+};
 
 const numbers = {
   displayName: "Numbers",
@@ -169,8 +196,19 @@ class SightWords extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wordSets: [colors, numbers, setOne, setTwo, setThree, setFour, setFive, setSix],
+      wordSets: [
+        colors,
+        numbers,
+        setOne,
+        setTwo,
+        setThree,
+        setFour,
+        setFive,
+        setSix,
+        setSeven
+      ],
       words: [],
+      wordCount: 0,
       incorrect: [],
       selectedWordCollection: ""
     };
@@ -204,7 +242,8 @@ class SightWords extends Component {
     this.setState({
       words: shuffledWords,
       incorrect: [],
-      selectedWord: shuffledWords[0]
+      selectedWord: shuffledWords[0],
+      wordCount: shuffledWords.length
     });
   };
 
@@ -265,13 +304,16 @@ class SightWords extends Component {
         {this.state.selectedWordCollection !== "" ? null : null}
 
         {this.state.words.length > 0 ? (
-          <WordCard
-            word={this.state.selectedWord}
-            correct={() => this.correct(this.state.selectedWord)}
-            incorrect={() => this.incorrect(this.state.selectedWord)}
-            sayWord={() => this.sayWord(this.state.selectedWord)}
-            selectedWordCollection={this.state.selectedWordCollection}
-          />
+          <Fragment>
+            <WordCard
+              word={this.state.selectedWord}
+              correct={() => this.correct(this.state.selectedWord)}
+              incorrect={() => this.incorrect(this.state.selectedWord)}
+              sayWord={() => this.sayWord(this.state.selectedWord)}
+              selectedWordCollection={this.state.selectedWordCollection}
+            />
+            <WordProgress totalWordCount={this.state.wordCount} remainingWordCount={this.state.words.length + this.state.incorrect.length} />
+          </Fragment>
         ) : (
           <Complete
             reset={this.reset}
