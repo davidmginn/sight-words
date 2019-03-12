@@ -160,6 +160,22 @@ const setSeven = {
   ]
 };
 
+const setEight = {
+  displayName: "Set #8",
+  words: [
+    "make",
+    "first",
+    "its",
+    "my",
+    "no",
+    "than",
+    "now",
+    "been",
+    "who",
+    "people"
+  ]
+};
+
 const numbers = {
   displayName: "Numbers",
   words: [
@@ -205,7 +221,8 @@ class SightWords extends Component {
         setFour,
         setFive,
         setSix,
-        setSeven
+        setSeven,
+        setEight
       ],
       words: [],
       wordCount: 0,
