@@ -10,7 +10,7 @@ import {
 import speechSynthesis from "speech-synthesis";
 
 const WordProgress = ({ totalWordCount, remainingWordCount }) => {
-  var percent = 100 - ((remainingWordCount / totalWordCount) * 100);
+  var percent = 100 - (remainingWordCount / totalWordCount) * 100;
 
   return (
     <div className="progress-container">
@@ -176,6 +176,22 @@ const setEight = {
   ]
 };
 
+const setNine = {
+  displayName: "Set #9",
+  words: [
+    "made",
+    "did",
+    "only",
+    "find",
+    "may",
+    "over",
+    "down",
+    "way",
+    "use",
+    "water"
+  ]
+};
+
 const numbers = {
   displayName: "Numbers",
   words: [
@@ -222,7 +238,8 @@ class SightWords extends Component {
         setFive,
         setSix,
         setSeven,
-        setEight
+        setEight,
+        setNine
       ],
       words: [],
       wordCount: 0,
@@ -329,7 +346,12 @@ class SightWords extends Component {
               sayWord={() => this.sayWord(this.state.selectedWord)}
               selectedWordCollection={this.state.selectedWordCollection}
             />
-            <WordProgress totalWordCount={this.state.wordCount} remainingWordCount={this.state.words.length + this.state.incorrect.length} />
+            <WordProgress
+              totalWordCount={this.state.wordCount}
+              remainingWordCount={
+                this.state.words.length + this.state.incorrect.length
+              }
+            />
           </Fragment>
         ) : (
           <Complete
